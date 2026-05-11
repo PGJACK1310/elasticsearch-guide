@@ -39,3 +39,69 @@ Common Usage
 - Check shard allocation issues in SIEM environments.
 - Monitor cluster stability and node availability.
 - Troubleshoot indexing or search performance issues.
+
+## Elasticsearch Indices Query
+
+The following query is used to display all indices available in the Elasticsearch cluster.
+
+```json
+GET _cat/indices?v
+```
+Purpose
+- Lists all indices in the Elasticsearch environment.
+- Displays index health, status, shard information, and storage details.
+- Helps monitor data ingestion and index availability
+
+Query Breakdown
+- _cat/indices → Retrieves index information in a human-readable format.
+- ?v → Adds column headers for better readability.
+
+Information Displayed
+- Health status of indices
+- Index name
+- Number of primary and replica shards
+- Document count
+- Storage size
+- Index status (open/close)
+
+## CHECK PARTICULER INDEX ACCORDING TO THE NAME 
+```json
+GET _cat/indices/(INDEX NAME)?v&s=index
+```
+## Elasticsearch Reindex Query
+
+The following query is used to copy filtered log data from one index to another index in Elasticsearch.
+
+```json
+POST _reindex
+{
+  "source": {
+    "index": "example-source-index",
+    "query": {
+      "match_phrase": {
+        "message": "example-keyword"
+      }
+    }
+  },
+  "dest": {
+    "index": "example-destination-index"
+  }
+}
+```
+Purpose
+- Copies specific logs from a source index to a destination index.
+- Filters logs containing a specific keyword or phrase.
+- Used for log segregation and SIEM log management.
+
+Query Breakdown
+- POST _reindex → Starts the reindex operation.
+- source.index → Original index containing logs.
+- match_phrase → Searches for the exact keyword or phrase.
+- message → Log field used for filtering.
+- dest.index → Destination index where filtered logs are stored.
+
+Common Usage
+- Separate vendor-specific logs.
+- Organize logs into dedicated indices.
+- Improve SIEM searching and monitoring.
+- Optimize dashboards and detection rules.
