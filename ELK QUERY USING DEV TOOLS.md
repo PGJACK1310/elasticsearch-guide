@@ -100,8 +100,49 @@ Query Breakdown
 - message → Log field used for filtering.
 - dest.index → Destination index where filtered logs are stored.
 
+# Elasticsearch Delete By Query
+
+Deletes documents containing from the `message` field.
+
+## Query
+
+```json
+POST /index_name/_delete_by_query?pretty
+{
+  "query": {
+    "match": {
+      "message": "message"
+    }
+  }
+}
+```
 Common Usage
 - Separate vendor-specific logs.
 - Organize logs into dedicated indices.
 - Improve SIEM searching and monitoring.
 - Optimize dashboards and detection rules.
+
+# Elasticsearch Cancel Task Example
+
+This Elasticsearch query cancels a running task using the Task Management API.
+
+## Query
+
+```json
+POST /_tasks/task_id/_cancel?pretty
+```
+# Elasticsearch Commands Short Explanation
+
+## Force Merge
+
+```json
+POST /_forcemerge?only_expunge_deletes=true
+```
+## Check Force Merge Tasks
+```json
+GET /_tasks?detailed=true&actions=*/forcemerge&pretty
+```
+## Check Delete By Query Tasks
+```json
+GET /_tasks?detailed=true&actions=*/delete/byquery&pretty
+```
